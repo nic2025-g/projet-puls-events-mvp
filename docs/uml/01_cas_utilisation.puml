@@ -1,0 +1,48 @@
+
+@startuml
+title Puls-Events MVP - Cas d'utilisation
+
+top to bottom direction
+
+skinparam shadowing false
+skinparam packageStyle rectangle
+skinparam defaultFontSize 14
+skinparam nodesep 25
+skinparam ranksep 30
+
+actor "Utilisateur" as U
+actor "Administrateur" as A
+actor "OpenAgenda" as O
+
+rectangle "Puls-Events MVP" {
+
+  package "Recherche et personnalisation" {
+    usecase "Rechercher des\nevenements" as UC1
+    usecase "Filtrer par lieu,\ndate et theme" as UC2
+    usecase "Obtenir des\nrecommandations" as UC3
+  }
+
+  package "Interaction utilisateur" {
+    usecase "Poursuivre une\nconversation" as UC4
+    usecase "Consulter des\nevenements actualises" as UC5
+    usecase "Evaluer une reponse" as UC6
+  }
+
+  package "Administration et donnees" {
+    usecase "Superviser le systeme" as UC7
+    usecase "Actualiser le catalogue" as UC8
+  }
+}
+
+U -- UC1
+U -- UC3
+U -- UC4
+U -- UC5
+U -- UC6
+
+A -- UC7
+O -- UC8
+
+UC2 ..> UC1 : <<extend>>
+
+@enduml
