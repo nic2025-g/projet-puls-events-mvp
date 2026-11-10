@@ -1,0 +1,32 @@
+
+@startuml
+title Puls-Events MVP - Sequence de recherche RAG
+
+autonumber
+
+actor Utilisateur
+participant "Interface Web" as UI
+participant "API Backend" as API
+participant "Moteur RAG" as RAG
+database "PostgreSQL\n+ pgvector" as DB
+participant "Mistral AI" as LLM
+
+Utilisateur -> UI : Saisir une question
+UI -> API : Envoyer la demande
+
+API -> RAG : Rechercher des evenements
+
+RAG -> LLM : Generer un embedding\npour la question
+LLM --> RAG : Vecteur de la question
+
+RAG -> DB : Recherche vectorielle\navec filtres
+DB --> RAG : Evenements pertinents
+
+RAG -> LLM : Question + contexte\n+ evenements retrouves
+LLM --> RAG : Reponse contextualisee
+
+RAG --> API : Reponse et references
+API --> UI : Afficher les resultats
+UI --> Utilisateur : Recommandations
+
+@enduml

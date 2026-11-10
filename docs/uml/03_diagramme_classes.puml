@@ -1,0 +1,68 @@
+
+@startuml
+title Puls-Events MVP - Diagramme de classes
+
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam linetype ortho
+hide empty methods
+
+class Utilisateur {
+  +id_utilisateur : UUID
+  +date_creation : DateTime
+}
+
+class Preference {
+  +id_preference : UUID
+  +ville : String
+  +theme : String
+  +date_debut : Date
+  +date_fin : Date
+}
+
+class Evenement {
+  +id_evenement : UUID
+  +titre : String
+  +description : Text
+  +lieu : String
+  +ville : String
+  +date_debut : DateTime
+  +date_fin : DateTime
+  +categorie : String
+  +source_url : String
+}
+
+class VecteurEvenement {
+  +id_vecteur : UUID
+  +embedding : Vector
+  +modele_embedding : String
+  +date_generation : DateTime
+}
+
+class Conversation {
+  +id_conversation : UUID
+  +date_creation : DateTime
+}
+
+class Message {
+  +id_message : UUID
+  +role : String
+  +contenu : Text
+  +date_envoi : DateTime
+}
+
+class Evaluation {
+  +id_evaluation : UUID
+  +note : Integer
+  +commentaire : String
+  +date_evaluation : DateTime
+}
+
+Utilisateur "1" -- "0..*" Preference : definit
+Utilisateur "1" -- "0..*" Conversation : ouvre
+Conversation "1" *-- "0..*" Message : contient
+Message "1" -- "0..1" Evaluation : recoit
+Evenement "1" *-- "0..1" VecteurEvenement : possede
+Utilisateur "1" -- "0..*" Evaluation : soumet
+
+@enduml
